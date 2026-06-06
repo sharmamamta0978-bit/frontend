@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import TicTac from "./TicTac";
 
+const API = import.meta.env.VITE_API_BASE_URL || '';
+
 function App() {
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,20 +53,20 @@ function App() {
 
     try {
       // POST /api/cities/fetch-and-save
-      const fetchRes = await axios.post("/api/cities/fetch-and-save");
+      const fetchRes = await axios.post(`${API}/api/cities/fetch-and-save`);
       if (fetchRes.data) {
         localStorage.setItem("aura_fetch_data", JSON.stringify(fetchRes.data));
       }
 
       // GET /api/cities/mood
-      const moodRes = await axios.get("/api/cities/mood");
+      const moodRes = await axios.get(`${API}/api/cities/mood`);
       if (moodRes.data) {
         localStorage.setItem("aura_mood_data", JSON.stringify(moodRes.data));
       }
 
       // POST /api/headlines/future_mood_forecast_batch
       const forecastRes = await axios.post(
-        "/api/headlines/future_mood_forecast_batch",
+        `${API}/api/headlines/future_mood_forecast_batch`,
         fetchRes.data // send aura_fetch_data
       );
       if (forecastRes.data) {
@@ -73,7 +75,7 @@ function App() {
 
       // POST /api/headlines/generate-batch
       const headlinesBatch = await axios.post(
-        "/api/headlines/generate-batch",
+        `${API}/api/headlines/generate-batch`,
         fetchRes.data // send aura_fetch_data
       );
       if (headlinesBatch.data) {
