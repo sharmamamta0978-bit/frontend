@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000', // FastAPI backend
+        target: 'https://auraai-mcxz.onrender.com', // FastAPI backend
         changeOrigin: true,
         secure: false,
       },
